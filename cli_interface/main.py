@@ -40,8 +40,16 @@ def main():
     print("\nYour selected analysis team:")
     for i, strategy in enumerate(selected_strategies, 1):
         print(f"{i}. {strategy}")
+    
+    # Save strategies first
+    storage = ModelTeamStorage()
+    strategy_number = storage.save_strategies(selected_strategies)
+    print(f"\nYour strategies have been saved as Set #{strategy_number}")
 
-    # Tone selection question
+    # Here you can add your operation/processing step
+    # ...
+
+    # Then get and save tone selection
     tone_question = [
         inquirer.List('tone',
                      message="Select the tone for your podcast",
@@ -49,18 +57,15 @@ def main():
                      ),
     ]
 
-    # Get tone selection
     tone_answer = inquirer.prompt(tone_question)
     selected_tone = tone_answer['tone']
     
     print(f"\nSelected podcast tone: {selected_tone}")
     
-    # Save the selections without prompt
-    storage = ModelTeamStorage()
-    team_number = storage.save_team(selected_strategies, selected_tone)
-    
-    print(f"\nYour selections have been saved as Team #{team_number}")
-    print("You can find your saved teams in 'podcast_teams.json'")
+    # Save tone selection
+    tone_number = storage.save_tone(selected_tone)
+    print(f"Your tone has been saved as Selection #{tone_number}")
+    print("You can find your saved selections in 'podcast_teams.json'")
 
 if __name__ == "__main__":
     main()
