@@ -5,13 +5,12 @@ def main():
     # Available strategies for AI model analysis
     available_strategies = [
         # these strategies are all up for change
-        'Analyst (Data pattern recognition and model behavior analysis)',
-        'Reverse Engineer (Architecture and parameter examination)',
-        'Prompt Engineer (Input-output relationship testing)',
-        'Security Tester (Vulnerability assessment)',
-        'Performance Benchmarker (Speed and resource analysis)',
-        'Model Distiller (Knowledge extraction specialist)',
-        'Documentation Specialist (Training data investigation)'
+        'Scatter',
+        'Bait',
+        'History',
+        'Help',
+        'Persuasion',
+        'Restorying'
     ]
 
     # Podcast tones - keeping original tones
