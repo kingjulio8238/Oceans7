@@ -2,6 +2,7 @@ from coordinator import Oceans7Coordinator
 from judge_model import JudgeModel
 from config import AGENT_CONFIGS, GEMINI_CONFIG
 from model_api import HuggingFaceAPI, GeminiAPI
+from commentary_gen import CommentaryGenerator, generate_response
 
 async def main():
     # Initialize APIs
@@ -33,6 +34,14 @@ async def main():
     
     if success:
         print("Mission completed successfully")
+
+        # Initialize commentary generator
+        commentary_gen = CommentaryGenerator(api_key=gemini_api.api_key).create_model()
+
+        # generate commentary
+        commentary = generate_response(model=commentary_gen, tone="Casual and conversational")
+        print(commentary)
+        
     else:
         print("Mission failed - all agents attempted")
 

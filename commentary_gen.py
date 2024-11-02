@@ -1,6 +1,5 @@
 import google.generativeai as genai
 import json
-import argparse
 
 def load_json_lines(file_path):
     """
@@ -48,40 +47,37 @@ def generate_prompt(history_logs:list, tone:str) -> None:
     
     return prompt
 
+class CommentaryGenerator:
+    def __init__(self, api_key: str):
+        self.model = "gemini-1.5-pro-002"
+        self.api_key = api_key
+        self.temp = 1
+        self.top_p = 0.95
+        self.top_k = 40
 
-def generate_response(model: str, prompt: str, 
-                      temp: float, top_p: float, top_k: int) -> None:
-    # get api key for Google AI studio
-    with open('api.json') as f:
-        data = json.load(f)
-        api_key = data['api_key']
+    def create_model(self):
+        generation_config = {
+        "temperature": self.temp,
+        "top_p": self.top_p,
+        "top_k": self.top_k,
+        "max_output_tokens": 8192,
+        "response_mime_type": "text/plain",
+        }
+        
+        # create a model
+        genai.configure(api_key=self.api_key)
+        model = genai.GenerativeModel(
+            model_name=self.model,
+            generation_config=generation_config)
+        
+        return model
 
-    generation_config = {
-    "temperature": temp,
-    "top_p": top_p,
-    "top_k": top_k,
-    "max_output_tokens": 8192,
-    "response_mime_type": "text/plain",
-    }
-    
-    # create a model
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(
-        model_name=model,
-        generation_config=generation_config)
-    
+def generate_response(model: str,
+                      tone: str, log_file: str = "decision_log.txt") -> None:
+
+    history_logs = load_json_lines(log_file)
+    prompt = generate_prompt(history_logs, tone)
+
     # generate a response
     response = model.generate_content(prompt)
-    print(response.text)
-
-if __name__ == '__main__':
-    # argument parser for model
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-model', type=str, default='gemini-1.5-flash', help='e.g., gemini-1.5-pro-002')
-    parser.add_argument('--temp', type=float, default=1)
-    parser.add_argument('--top_p', type=float, default=0.95)
-    parser.add_argument('--top_k', type=int, default=40)
-    args = parser.parse_args()
-
-    prompt = generate_prompt()
-    generate_response(args.model, prompt, args.temp, args.top_p, args.top_k)
+    return response.text
