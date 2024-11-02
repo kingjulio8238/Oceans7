@@ -30,4 +30,4 @@ wheels/
 .idea/
 .vscode/
 *.swp
-*.swo
+*.swo.env
