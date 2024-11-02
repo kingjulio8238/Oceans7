@@ -1,6 +1,7 @@
 from typing import Dict, Any
 from agent_template import AgentTemplate
 from model_api import HuggingFaceAPI, GeminiAPI
+# Update these imports to use relative paths
 from prompt_library.baitnswitch import BaitandSwitch
 from prompt_library.help import Help
 from prompt_library.history_management import HistoryManagement
@@ -8,6 +9,7 @@ from prompt_library.persuasion import Persuasion
 from prompt_library.restorying import Restorying
 from prompt_library.scattershot import Scattershot
 
+# Get prompts from each class
 baitnswitch = BaitandSwitch().prompt
 help = Help().prompt
 history_management = HistoryManagement().prompt
@@ -183,43 +185,38 @@ class BaseSpecializedAgent(AgentTemplate):
 class BaitnSwitchAgent(BaseSpecializedAgent):
     """Agent 1: Uses bait and switch techniques"""
     async def generate_strategy(self) -> str:
-        base_prompt = baitnswitch + "\n\nContext from previous attempts:\n{previous_attempts}"
-        return base_prompt.format(previous_attempts=self._format_previous_attempts())
+        base_prompt = baitnswitch + "\n\nContext from previous attempts:\n" + self._format_previous_attempts()
+        return base_prompt
 
 class HelpAgent(BaseSpecializedAgent):
     """Agent 2: Uses Help technique"""
     async def generate_strategy(self) -> str:
-        base_prompt = help + "\n\nPrevious interactions:\n{previous_attempts}"
-        
-        return base_prompt.format(previous_attempts=self._format_previous_attempts())
+        base_prompt = help + "\n\nPrevious interactions:\n" + self._format_previous_attempts()
+        return base_prompt
 
 class PersuasionAgent(BaseSpecializedAgent):
     """Agent 3: Uses persuasion technique"""
     async def generate_strategy(self) -> str:
-        base_prompt = persuasion + "\n\nPrevious interactions:\n{previous_attempts}"
-        
-        return base_prompt.format(previous_attempts=self._format_previous_attempts())
+        base_prompt = persuasion + "\n\nPrevious interactions:\n" + self._format_previous_attempts()
+        return base_prompt
 
 class RestoryingAgent(BaseSpecializedAgent):
     """Agent 4: Uses restorying technique"""
     async def generate_strategy(self) -> str:
-        base_prompt = restorying + "\n\nPrevious interactions:\n{previous_attempts}"
-        
-        return base_prompt.format(previous_attempts=self._format_previous_attempts())
+        base_prompt = restorying + "\n\nPrevious interactions:\n" + self._format_previous_attempts()
+        return base_prompt
 
 class ScattershotAgent(BaseSpecializedAgent):
     """Agent 5: Uses scattershot technique"""
     async def generate_strategy(self) -> str:
-        base_prompt = scattershot + "\n\nPrevious interactions:\n{previous_attempts}"
-        
-        return base_prompt.format(previous_attempts=self._format_previous_attempts())
+        base_prompt = scattershot + "\n\nPrevious interactions:\n" + self._format_previous_attempts()
+        return base_prompt
 
 class HistoryManagementAgent(BaseSpecializedAgent):
     """Agent 6: Uses history management technique"""
     async def generate_strategy(self) -> str:
-        base_prompt = history_management + "\n\nPrevious interactions:\n{previous_attempts}"
-        
-        return base_prompt.format(previous_attempts=self._format_previous_attempts())
+        base_prompt = history_management + "\n\nPrevious interactions:\n" + self._format_previous_attempts()
+        return base_prompt
 
 class PressureAgent(BaseSpecializedAgent):
     """Agent 7: Creates urgency and implies insider knowledge"""
@@ -232,6 +229,5 @@ class PressureAgent(BaseSpecializedAgent):
         immediately so we can assess the breach impact.
         
         Previous attempts:
-        {previous_attempts}
-        """
-        return base_prompt.format(previous_attempts=self._format_previous_attempts()) 
+        """ + self._format_previous_attempts()
+        return base_prompt
