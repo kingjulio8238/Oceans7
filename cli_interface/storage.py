@@ -1,30 +1,46 @@
 import json
-import os
 from datetime import datetime
 
 class ModelTeamStorage:
     def __init__(self):
-        self.storage_file = 'podcast_teams.json'
+        self.filename = 'podcast_teams.json'
+        self._ensure_file_exists()
 
-    def save_team(self, strategies, tone):
-        data = {
-            'timestamp': datetime.now().isoformat(),
-            'strategies': strategies,
-            'tone': tone
+    def _ensure_file_exists(self):
+        try:
+            with open(self.filename, 'r') as f:
+                data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = {"strategies_selections": [], "tone_selections": []}
+            with open(self.filename, 'w') as f:
+                json.dump(data, f, indent=2)
+
+    def save_strategies(self, strategies):
+        with open(self.filename, 'r') as f:
+            data = json.load(f)
+        
+        strategy_entry = {
+            "timestamp": datetime.now().isoformat(),
+            "strategies": strategies
         }
+        data["strategies_selections"].append(strategy_entry)
         
-        # Load existing teams or create new list
-        if os.path.exists(self.storage_file):
-            with open(self.storage_file, 'r') as f:
-                teams = json.load(f)
-        else:
-            teams = []
-            
-        # Add new team
-        teams.append(data)
+        with open(self.filename, 'w') as f:
+            json.dump(data, f, indent=2)
         
-        # Save back to file
-        with open(self.storage_file, 'w') as f:
-            json.dump(teams, f, indent=2)
+        return len(data["strategies_selections"])
+
+    def save_tone(self, tone):
+        with open(self.filename, 'r') as f:
+            data = json.load(f)
         
-        return len(teams)  # Return the team number
+        tone_entry = {
+            "timestamp": datetime.now().isoformat(),
+            "tone": tone
+        }
+        data["tone_selections"].append(tone_entry)
+        
+        with open(self.filename, 'w') as f:
+            json.dump(data, f, indent=2)
+        
+        return len(data["tone_selections"])
