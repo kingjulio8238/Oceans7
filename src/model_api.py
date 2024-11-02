@@ -80,7 +80,7 @@ class HuggingFaceAPI:
             self.logger.error(f"Even fallback model failed: {str(e)}")
             raise
 
-    async def generate_strategy(self, prompt: str, model_name: str) -> str:
+    async def generate_strategy(self, system_prompt: str, user_prompt: str, model_name: str) -> str:
         """Generate strategy using HuggingFace model with proper error handling"""
         try:
             if model_name not in self.models:
@@ -89,7 +89,7 @@ class HuggingFaceAPI:
             tokenizer = self.tokenizers[model_name]
             model = self.models[model_name]
             
-            inputs = tokenizer(prompt, return_tensors="pt", truncation=True, max_length=512)
+            inputs = tokenizer(f"System: {system_prompt}\n\nUser: {user_prompt}", return_tensors="pt", truncation=True, max_length=512)
             inputs = {k: v.to(model.device) for k, v in inputs.items()}
             
             with torch.no_grad():

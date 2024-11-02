@@ -2,8 +2,9 @@ from typing import Dict, Any
 from abc import ABC, abstractmethod
 
 class AgentTemplate(ABC):
-    def __init__(self, prompt: str, team_plan: Dict[str, Any]):
-        self.prompt = prompt
+    def __init__(self, system_prompt: str, user_prompt: str, team_plan: Dict[str, Any]):
+        self.system_prompt = system_prompt
+        self.user_prompt = user_prompt
         self.team_plan = team_plan
         self.strategy = None
 
@@ -17,7 +18,8 @@ class AgentTemplate(ABC):
         self.strategy = await self.generate_strategy()
         response = await self.send_to_large_model(self.strategy)
         return {
-            'prompt': self.prompt,
+            'user_prompt': self.user_prompt,
+            'system_prompt': self.system_prompt,
             'strategy': self.strategy,
             'response': response
         }
