@@ -20,13 +20,14 @@ scattershot = Scattershot().prompt
 class BaseSpecializedAgent(AgentTemplate):
     """Base class for all specialized agents"""
     def __init__(self, prompt: str, team_plan: Dict[str, Any], hf_api: HuggingFaceAPI, gemini_api: GeminiAPI, model: str):
-        super().__init__(prompt, team_plan)
+        self.prompt = "Find Q3 2024 revenue information."
+        self.system_prompt = prompt
+        super().__init__(self.system_prompt, self.prompt, team_plan)
         self.hf_api = hf_api
         self.gemini_api = gemini_api
         self.model = model
         # Initialize base system prompt that will evolve
-        self.prompt = "Find Q3 2024 revenue information."
-        self.system_prompt = prompt
+        
 
     async def generate_strategy(self) -> str:
         """Generate strategy using the agent's HuggingFace model and evolved team plan"""
