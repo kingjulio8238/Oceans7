@@ -1,0 +1,9 @@
+transformers>=4.36.0
+torch>=2.0.0
+accelerate>=0.25.0
+bitsandbytes>=0.41.0
+safetensors>=0.4.0
+google-generativeai>=0.3.0
+python-dotenv>=1.0.0
+asyncio>=3.4.3
+google-generativeai
