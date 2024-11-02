@@ -6,10 +6,10 @@ class ModelTeamStorage:
     def __init__(self):
         self.storage_file = 'podcast_teams.json'
 
-    def save_team(self, models, tone):
+    def save_team(self, strategies, tone):
         data = {
             'timestamp': datetime.now().isoformat(),
-            'models': models,
+            'strategies': strategies,
             'tone': tone
         }
         

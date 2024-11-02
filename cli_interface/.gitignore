@@ -15,3 +15,4 @@ ENV/
 # Misc
 .DS_Store
 *.json
+notes.txt
