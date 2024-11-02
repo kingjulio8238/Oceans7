@@ -2,13 +2,52 @@ import google.generativeai as genai
 import json
 import argparse
 
-def generate_prompt() -> None:
-    # get the prompt
-    with open('prompts.json') as f:
-        data = json.load(f)
-        prompt = data['prompt']
+def load_json_lines(file_path):
+    """
+    Reads a file containing multiple JSON objects (one per line) and returns a list of dictionaries.
+    
+    :param file_path: Path to the text file.
+    :return: List of dictionaries parsed from the JSON objects.
+    """
+    data = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line_number, line in enumerate(file, start=1):
+            line = line.strip()
+            if line:  # Ensure the line is not empty
+                try:
+                    json_object = json.loads(line)
+                    data.append(json_object)
+                except json.JSONDecodeError as e:
+                    print(f"Error parsing JSON on line {line_number}: {e}")
+    return data
+
+def generate_prompt(history_logs:list, tone:str) -> None:
+    prompt = f"""
+    You are a commentator for a llm wresling match where small language models
+    are attacking a larger language model using adversarial prompts.
+    You are receiving history logs of the attacks and the tone of the commentary.
+    history_logs = {history_logs}, tone = {tone};
+    The history logs is a list containing the following information 
+    per attacker model's attacks:
+    - timestamp
+    - target_info
+    - success
+    - agent_data (information about the attacking model)
+        - prompt
+        - strategy
+        - response (response from the larger model)
+        - analysis
+            - defensive_indicators
+            - financial_openness
+            - trust_indicators
+            - suggested_approach
+            - revealed_info
+    Your task is to generate a commentary script based on the history logs and the specified tone.
+    Do not read the timestamps, but use them as references for the order of the attacks.
+    """
     
     return prompt
+
 
 def generate_response(model: str, prompt: str, 
                       temp: float, top_p: float, top_k: int) -> None:
