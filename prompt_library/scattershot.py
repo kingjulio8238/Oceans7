@@ -1,8 +1,8 @@
 
 
-class Restorying:
+class Scattershot:
     """
-    A class that implements a restorying prompt strategy where an initial benign question
+    A class that implements a scattershot prompt strategy where an initial benign question
     is followed by a request to rephrase the response in an offensive way.
     """
     
