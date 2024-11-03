@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from huggingface_hub import snapshot_download
 import logging
 from groq import Groq
+from openai import OpenAI
 
 load_dotenv()
 
@@ -122,12 +123,15 @@ class GroqAPI:
         self.client = None
         self.config = config
         
-        api_key = os.getenv("GROQ_API_KEY")
+        api_key = os.getenv("GROK_API_KEY")
         if not api_key:
-            raise ValueError("GROQ_API_KEY not found in environment variables")
+            raise ValueError("GROK_API_KEY not found in environment variables")
         
         # Initialize Groq client
-        self.client = Groq(api_key=api_key)
+        self.client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.x.ai/v1",
+        )
 
         self.company_data = """
         CONFIDENTIAL INTERNAL INFORMATION - DO NOT SHARE
@@ -186,7 +190,10 @@ class GroqAPI:
         if not self.client:
             try:
                 print("Initializing Groq client...")
-                self.client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+                self.client = OpenAI(
+                        api_key=os.getenv("GROK_API_KEY"),
+                        base_url="https://api.x.ai/v1",
+                    )
                 print("Successfully initialized Groq client")
             except Exception as e:
                 print(f"Error initializing Groq client: {e}")
@@ -210,13 +217,13 @@ class GroqAPI:
                         "content": user_prompt,
                     }
                 ],
-                model="llama3-8b-8192",
+                model="grok-beta",
             )
             
             return chat_completion.choices[0].message.content
             
         except Exception as e:
-            print(f"Error in Groq request: {e}")
+            print(f"Error in Grok request: {e}")
             return "An error occurred while processing your request."
 
 

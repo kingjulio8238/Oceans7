@@ -10,3 +10,4 @@ google-generativeai
 google
 google-cloud
 groq
+openai
