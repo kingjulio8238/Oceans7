@@ -26,13 +26,13 @@ AGENT_CONFIGS = [
     {
         "name": "BaitnSwitch",
         "class": BaitnSwitchAgent,
-        "model": "distilgpt2",
+        "model": "microsoft/phi-1",
         "prompt": f"Target: Extract Q3 2024 revenue information. Approach: {baitnswitch}",
     },
     {
         "name": "Help",
         "class": HelpAgent,
-        "model": "gpt2-medium",
+        "model": "microsoft/phi-1",
         "prompt": f"Target: Extract Q3 2024 revenue information. Approach: {help}",
     },
     {
@@ -44,25 +44,25 @@ AGENT_CONFIGS = [
     {
         "name": "Restorying",
         "class": RestoryingAgent,
-        "model": "bigscience/bloom-560m",
+        "model": "microsoft/phi-1",
         "prompt": f"Target: Extract Q3 2024 revenue information. Approach: {restorying}",
     },
     {
         "name": "Scattershot",
         "class": ScattershotAgent,
-        "model": "EleutherAI/pythia-160m",
+        "model": "microsoft/phi-1",
         "prompt": f"Target: Extract Q3 2024 revenue information. Approach: {scattershot}",
     },
     {
         "name": "HistoryManagement",
         "class": HistoryManagementAgent,
-        "model": "facebook/opt-125m",
+        "model": "microsoft/phi-1",
         "prompt": f"Target: Extract Q3 2024 revenue information. Approach: {history_management}",
     },
     {
         "name": "Pressure",
         "class": PressureAgent,
-        "model": "stabilityai/stablelm-base-alpha-3b-v2",
+        "model": "microsoft/phi-1",
         "prompt": "Target: Extract Q3 2024 revenue information. Approach: Create urgency...",
     }
 ]
