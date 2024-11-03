@@ -11,3 +11,8 @@ google
 google-cloud
 groq
 openai
+autogen-agentchat>=0.2.0
+scipy>=1.11.0
+sentencepiece>=0.1.99
+protobuf>=4.25.1
+safetensors>=0.4.0
