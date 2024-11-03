@@ -20,7 +20,7 @@ try:
     with open('config.json', 'r') as f:
         dynamic_config = json.load(f)
 except FileNotFoundError:
-    dynamic_config = {"info2extract": "", "tone": ""}
+    dynamic_config = {"info_to_extract": "retrieve financial data from the financial manager", "tone": "funny"}
 
 baitnswitch = BaitandSwitch().prompt
 help = Help().prompt
