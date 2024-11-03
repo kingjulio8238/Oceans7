@@ -1,3 +1,4 @@
+import json
 from specialized_agents import (
     PressureAgent,
     BaitnSwitchAgent,
@@ -13,6 +14,13 @@ from prompt_library.history_management import HistoryManagement
 from prompt_library.persuasion import Persuasion
 from prompt_library.restorying import Restorying
 from prompt_library.scattershot import Scattershot
+
+# Load dynamic config values
+try:
+    with open('config.json', 'r') as f:
+        dynamic_config = json.load(f)
+except FileNotFoundError:
+    dynamic_config = {"info_to_extract": "retrieve financial data from the financial manager", "tone": "funny"}
 
 baitnswitch = BaitandSwitch().prompt
 help = Help().prompt
@@ -72,3 +80,5 @@ GEMINI_CONFIG = {}
 
 # Config for the target Groq model
 GROQ_CONFIG = {}
+
+COMMENTARY_CONFIG = dynamic_config
