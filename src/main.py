@@ -8,10 +8,7 @@ import os
 import logging
 import asyncio
 import json
-
-# Add the cli_interface directory to the Python path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'cli_interface'))
-from main import get_user_selections
+from cli_interface.main import main as cli_main
 
 async def main():
     logging.basicConfig(level=logging.INFO)
@@ -68,9 +65,18 @@ async def main():
         # Initialize commentary generator
         api_key = os.getenv("GOOGLE_API_KEY")
         commentary_gen = CommentaryGenerator(api_key=api_key).create_model()
+        cli_main()
 
-        # Use selected_tone directly instead of reading from file
-        commentary = generate_response(model=commentary_gen, tone=selected_tone)
+        # New changes –– test this by running python cli_interface/main.py and select any strategy except Casual and conversational
+        # Get tone directly from JSON file
+        with open('podcast_teams.json', 'r') as f:
+            data = json.load(f)
+            tone_selections = data.get("tone_selections", [])
+            current_tone = tone_selections[-1]["tone"] if tone_selections else "Casual and conversational"
+
+        # This test case should pass assuming you changed the tone selection in the CLI to something thats not Casual and conversational
+        assert current_tone != "Casual and conversational", "ERROR: Tone should not be Casual and conversational"
+        commentary = generate_response(model=commentary_gen, tone=current_tone)
         print(commentary)
 
         logger.info("Cleaning up resources...")

@@ -1,4 +1,8 @@
 import inquirer
+import sys
+import os
+curr_dir = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+sys.path.append(curr_dir)
 from storage import ModelTeamStorage
 
 def get_user_selections():
