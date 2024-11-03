@@ -80,4 +80,9 @@ def generate_response(model: str,
 
     # generate a response
     response = model.generate_content(prompt)
+
+    # Save the response text to a file
+    with open("/script_text/script_generated.txt", "w", encoding="utf-8") as file:
+        file.write(response.text)
+    
     return response.text
