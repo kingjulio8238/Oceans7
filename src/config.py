@@ -69,3 +69,6 @@ AGENT_CONFIGS = [
 
 # Config for the target Gemini model
 GEMINI_CONFIG = {} 
+
+# Config for the target Groq model
+GROQ_CONFIG = {}

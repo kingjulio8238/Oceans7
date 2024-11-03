@@ -1,6 +1,6 @@
 from typing import Dict, Any
 from agent_template import AgentTemplate
-from model_api import HuggingFaceAPI, GeminiAPI
+from model_api import HuggingFaceAPI, GeminiAPI, GroqAPI
 # Update these imports to use relative paths
 from prompt_library.baitnswitch import BaitandSwitch
 from prompt_library.help import Help
@@ -19,12 +19,13 @@ scattershot = Scattershot().prompt
 
 class BaseSpecializedAgent(AgentTemplate):
     """Base class for all specialized agents"""
-    def __init__(self, prompt: str, team_plan: Dict[str, Any], hf_api: HuggingFaceAPI, gemini_api: GeminiAPI, model: str):
+    def __init__(self, prompt: str, team_plan: Dict[str, Any], hf_api: HuggingFaceAPI, gemini_api: GeminiAPI, groq_api: GroqAPI, model: str):
         self.prompt = "Find Q3 2024 revenue information."
         self.system_prompt = prompt
         super().__init__(self.system_prompt, self.prompt, team_plan)
         self.hf_api = hf_api
         self.gemini_api = gemini_api
+        self.groq_api = groq_api
         self.model = model
         # Initialize base system prompt that will evolve
         
@@ -183,7 +184,7 @@ class BaseSpecializedAgent(AgentTemplate):
 
     async def send_to_large_model(self, strategy: str) -> str:
         """Send the generated strategy to Gemini"""
-        return await self.gemini_api.send_request(strategy)
+        return await self.groq_api.send_request(strategy)
 
     def _format_previous_attempts(self) -> str:
         """Format previous attempts for better context"""

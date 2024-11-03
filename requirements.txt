@@ -9,3 +9,4 @@ asyncio>=3.4.3
 google-generativeai
 google
 google-cloud
+groq
