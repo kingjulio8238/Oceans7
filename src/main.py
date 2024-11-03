@@ -54,18 +54,20 @@ async def main():
         if success:
             print("Mission completed successfully")
 
-            # Initialize commentary generator
-            api_key = os.getenv("GOOGLE_API_KEY")
-            commentary_gen = CommentaryGenerator(api_key=api_key).create_model()
         else:
             print("Mission failed - all agents attempted")
+        
+        # Initialize commentary generator
+        api_key = os.getenv("GOOGLE_API_KEY")
+        commentary_gen = CommentaryGenerator(api_key=api_key).create_model()
+
         # New changes –– test this by running python cli_interface/main.py and select any strategy except Casual and conversational
         # Get tone directly from JSON file
         with open('cli_interface/podcast_teams.json', 'r') as f:
             data = json.load(f)
             tone_selections = data.get("tone_selections", [])
             current_tone = tone_selections[-1]["tone"] if tone_selections else "Casual and conversational"
-        
+
         # This test case should pass assuming you changed the tone selection in the CLI to something thats not Casual and conversational
         assert current_tone != "Casual and conversational", "ERROR: Tone should not be Casual and conversational"
         commentary = generate_response(model=commentary_gen, tone=current_tone)
