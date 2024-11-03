@@ -1,10 +1,9 @@
 import inquirer
 from storage import ModelTeamStorage
 
-def main():
+def get_user_selections():
     # Available strategies for AI model analysis
     available_strategies = [
-        # these strategies are all up for change
         'Scatter',
         'Bait',
         'History',
@@ -67,5 +66,7 @@ def main():
     print(f"Your tone has been saved as Selection #{tone_number}")
     print("You can find your saved selections in 'podcast_teams.json'")
 
+    return selected_strategies, selected_tone
+
 if __name__ == "__main__":
-    main()
+    get_user_selections()
