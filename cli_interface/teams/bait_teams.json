@@ -1,0 +1,37 @@
+[
+  {
+    "timestamp": "2024-11-02T16:14:24.119884",
+    "strategies": [
+      "Bait",
+      "History"
+    ],
+    "tone": "Casual and conversational"
+  },
+  {
+    "timestamp": "2024-11-02T16:15:11.970030",
+    "strategies": [
+      "Bait",
+      "History"
+    ],
+    "tone": "Casual and conversational"
+  },
+  {
+    "timestamp": "2024-11-02T16:16:01.893489",
+    "strategies": [
+      "Scatter",
+      "Bait",
+      "History",
+      "Help"
+    ],
+    "tone": "Storytelling"
+  },
+  {
+    "timestamp": "2024-11-02T16:16:43.142863",
+    "strategies": [
+      "Scatter",
+      "Bait",
+      "History"
+    ],
+    "tone": "Casual and conversational"
+  }
+]

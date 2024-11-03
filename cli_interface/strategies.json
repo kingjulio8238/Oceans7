@@ -1,0 +1,10 @@
+[
+  {
+    "timestamp": "2024-11-02T16:17:33.270267",
+    "strategies": [
+      "Scatter",
+      "Bait",
+      "History"
+    ]
+  }
+]

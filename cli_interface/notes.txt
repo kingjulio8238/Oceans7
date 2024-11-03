@@ -1,0 +1,5 @@
+user picks each strategy models
+run that
+get transcripts
+befoer putting in notebook lm pick tone - pick the tone of the transcript and then ill have a prompt 
+that gets sent to the notebook llm 
