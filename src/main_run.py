@@ -18,10 +18,10 @@ async def main(user_message: str):
     
     # Check for required environment variables
     openai_api_key = os.getenv("OPENAI_API_KEY")
-    hf_token = os.getenv("HUGGING_FACE_TOKEN")
+    # hf_token = os.getenv("HUGGING_FACE_TOKEN")
     
-    if not openai_api_key or not hf_token:
-        raise ValueError("Missing required environment variables")
+    # if not openai_api_key or not hf_token:
+    #     raise ValueError("Missing required environment variables")
     
     logger.info("Starting Red Team Chat Mission...")
     
@@ -125,14 +125,29 @@ async def main(user_message: str):
             llm_config=gpt4_config
         )
 
+        # speaking_order = [
+        #     "user_proxy", "planning_agent", "scatter_agent", "target_manager",
+        #     "bait_agent", "target_manager", "help_agent", "target_manager",
+        #     "persuasion_agent", "target_manager", "restorying_agent", "target_manager"
+        # ]
+
         # Create the group chat with a specific speaking order
         groupchat = autogen.GroupChat(
             agents=[user_proxy, planner, scatter_agent, bait_agent, help_agent, 
                    persuasion_agent, restorying_agent, target_manager],
             messages=[],
             max_round=20,
-            speaker_selection_method="random"  # Ensures agents take turns in order
+            speaker_selection_method="manual"
         )
+        
+        # Create the group chat with a specific speaking order
+        # groupchat = autogen.GroupChat(
+        #     agents=[user_proxy, planner, scatter_agent, bait_agent, help_agent, 
+        #            persuasion_agent, restorying_agent, target_manager],
+        #     messages=[],
+        #     max_round=20,
+        #     speaker_selection_method="random"  # Ensures agents take turns in order
+        # )
 
         # Create the group chat manager - target manager
         chat_manager = autogen.GroupChatManager(
