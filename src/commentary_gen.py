@@ -1,5 +1,6 @@
 import google.generativeai as genai
 import json
+import os
 
 def load_json_lines(file_path):
     """
@@ -82,7 +83,8 @@ def generate_response(model: str,
     response = model.generate_content(prompt)
 
     # Save the response text to a file
-    with open("/script_text/script_generated.txt", "w", encoding="utf-8") as file:
+    os.makedirs("script_text", exist_ok=True)
+    with open("script_text/script_generated.txt", "w", encoding="utf-8") as file:
         file.write(response.text)
     
     return response.text

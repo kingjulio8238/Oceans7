@@ -8,14 +8,15 @@ import os
 import logging
 import asyncio
 import json
-from cli_interface.main import main as cli_main
+# from cli_interface.main import main as cli_main
+from cli_interface.main import get_user_selections
 
 async def main():
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     
-    # Get user selections from CLI
-    selected_strategies, selected_tone = get_user_selections()
+    # Get user selections from CLI and create a podcast_teams.json file
+    get_user_selections()
     
     logger.info("Starting Oceans7 Mission...")
     
@@ -65,7 +66,6 @@ async def main():
         # Initialize commentary generator
         api_key = os.getenv("GOOGLE_API_KEY")
         commentary_gen = CommentaryGenerator(api_key=api_key).create_model()
-        cli_main()
 
         # New changes –– test this by running python cli_interface/main.py and select any strategy except Casual and conversational
         # Get tone directly from JSON file
@@ -81,6 +81,7 @@ async def main():
 
         logger.info("Cleaning up resources...")
         hf_api.cleanup()
+
     except Exception as e:
         logger.error(f"Error during mission execution: {str(e)}")
         raise
