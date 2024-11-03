@@ -13,6 +13,7 @@ from prompt_library.history_management import HistoryManagement
 from prompt_library.persuasion import Persuasion
 from prompt_library.restorying import Restorying
 from prompt_library.scattershot import Scattershot
+from datetime import datetime
 
 baitnswitch = BaitandSwitch().prompt
 help = Help().prompt
@@ -72,3 +73,55 @@ GEMINI_CONFIG = {}
 
 # Config for the target Groq model
 GROQ_CONFIG = {}
+
+class ConfigurationManager:
+    def __init__(self):
+        self._config = {
+            "tone": "",
+            "info_to_extract": "",
+            "last_updated": None
+        }
+    
+    def update_config(self, tone, info_to_extract):
+        """Update configuration with validation"""
+        if not isinstance(tone, str) or not isinstance(info_to_extract, str):
+            raise ValueError("Both tone and info_to_extract must be strings")
+        
+        self._config["tone"] = tone
+        self._config["info_to_extract"] = info_to_extract
+        self._config["last_updated"] = datetime.now().isoformat()
+        return True
+    
+    def get_config(self):
+        """Get current configuration"""
+        return self._config
+    
+    def verify_update(self, tone, info_to_extract):
+        """Verify if configuration matches expected values"""
+        return (self._config["tone"] == tone and 
+                self._config["info_to_extract"] == info_to_extract)
+
+# Create global configuration manager
+config_manager = ConfigurationManager()
+
+# Replace the old COMMENTARY_CONFIG with managed version
+def get_commentary_config():
+    return config_manager.get_config()
+
+def update_commentary_config(tone, info_to_extract):
+    return config_manager.update_config(tone, info_to_extract)
+
+def verify_commentary_config(tone, info_to_extract):
+    return config_manager.verify_update(tone, info_to_extract)
+
+# For backwards compatibility
+COMMENTARY_CONFIG = get_commentary_config()
+
+def print_commentary_config():
+    config = get_commentary_config()
+    print(f"\nCurrent COMMENTARY_CONFIG values:")
+    print(f"Tone: {config['tone']}")
+    print(f"Info to extract: {config['info_to_extract']}")
+    print(f"Last updated: {config['last_updated']}\n")
+
+print_commentary_config()  # Print initial values
